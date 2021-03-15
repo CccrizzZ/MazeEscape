@@ -80,7 +80,12 @@ public class PlayerCamera : MonoBehaviour
 
             // rotate player body
             // transform.localRotation = Quaternion.Euler(0.0f, XRotation, 0.0f);
-            transform.localRotation = Quaternion.Euler(0.0f,CamTransform.rotation.eulerAngles.y, 0.0f);
+
+            // if(pmove.InputVector.y > 0)
+            // {
+                transform.localRotation = Quaternion.Euler(0.0f,CamTransform.rotation.eulerAngles.y, 0.0f);
+
+            // }
 
 
         }

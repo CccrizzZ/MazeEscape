@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 
+
+
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -18,19 +20,23 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rbRef;
     Animator animController;
+    PlayerCamera pcamRef;
 
-    Vector2 InputVector;
+    
+    
+    public Vector2 InputVector;
     Vector3 MoveDirection;
     float CurrentSpeed;
 
 
-
+    
     void Start()
     {
         canMove = true;
         isGrounded = true;
         rbRef = GetComponent<Rigidbody>();
         animController = GetComponent<Animator>();
+        pcamRef = GetComponent<PlayerCamera>();
     }
 
     void Update()
@@ -76,6 +82,14 @@ public class PlayerMovement : MonoBehaviour
 
 
             // rbRef.MovePosition(transform.position + movement * 5);
+
+            // if(InputVector != Vector2.zero)
+            // {
+            //     float targetAngle = Mathf.Atan2(InputVector.x, InputVector.y) * Mathf.Rad2Deg + pcamRef.CamTransform.eulerAngles.y;
+            //     Quaternion rotation = Quaternion.Euler(0.0f, targetAngle, 0.0f);
+            //     transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
+            // }
+
 
         }
     }

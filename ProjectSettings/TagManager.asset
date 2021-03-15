@@ -9,6 +9,7 @@ TagManager:
   - SpawnPoint
   - PauseMenu
   - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX
