@@ -7,8 +7,6 @@ public class PlayerCamera : MonoBehaviour
   
     public float MouseSensitivity;
     
-    float XRotation = 0.0f;
-    float YRotation = 0.0f;
 
     public bool canLook;
 
@@ -26,7 +24,7 @@ public class PlayerCamera : MonoBehaviour
     public void ResetCameraRot()
     {
         transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-        XRotation = 0.0f;
+        // XRotation = 0.0f;
     }
 
 

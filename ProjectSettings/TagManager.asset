@@ -10,6 +10,13 @@ TagManager:
   - PauseMenu
   - Wall
   - Enemy
+  - portal
+  - supplybox
+  - firstaid
+  - bat
+  - KeyText
+  - TimerText
+  - HealthText
   layers:
   - Default
   - TransparentFX
