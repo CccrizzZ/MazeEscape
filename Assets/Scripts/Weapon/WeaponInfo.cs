@@ -17,14 +17,15 @@ namespace WeaponScript
 
     public class WeaponInfo : MonoBehaviour
     {
-        string WeaponName;
+        public string WeaponName;
         public WeaponType type;
 
-        int Damage;
+        public int Damage;
 
         void Start()
         {
-            
+            WeaponName = gameObject.name;
+            print(WeaponName);
         }
 
         void Update()

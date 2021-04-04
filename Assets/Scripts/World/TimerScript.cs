@@ -9,7 +9,7 @@ public class TimerScript : MonoBehaviour
 
     int clock_seconds;
 
-    int time_limit = 60;
+    int time_limit = 120;
 
     bool activated;
 
@@ -26,7 +26,7 @@ public class TimerScript : MonoBehaviour
     {
         if (Time.frameCount % 120 == 0 && activated)
         {
-            if (clock_seconds > 56)
+            if (clock_seconds > 0)
             {
                 // set timer and update ui
                 clock_seconds--;

@@ -17,6 +17,7 @@ TagManager:
   - KeyText
   - TimerText
   - HealthText
+  - KillText
   layers:
   - Default
   - TransparentFX

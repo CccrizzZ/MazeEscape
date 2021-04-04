@@ -11,6 +11,7 @@ public class PlayerStatus : MonoBehaviour
     int Health;
     int Stamina;
     public int KeyCount;
+    public int KillCount;
 
 
     public CapsuleCollider InGameCollider;
@@ -20,6 +21,7 @@ public class PlayerStatus : MonoBehaviour
 
     void Start()
     {
+        KillCount = 0;
         KeyCount = 0;
         Health = 100;
         Stamina = 100;
@@ -27,6 +29,7 @@ public class PlayerStatus : MonoBehaviour
         // init ui
         GameObject.FindGameObjectWithTag("KeyText").GetComponent<Text>().text = KeyCount.ToString();
         GameObject.FindGameObjectWithTag("HealthText").GetComponent<Text>().text = Health.ToString();
+        GameObject.FindGameObjectWithTag("KillText").GetComponent<Text>().text = KillCount.ToString();
 
         // spawn player at random position
         // transform.position = new Vector3(Random.Range(-35, 56), -14f, Random.Range(30, 123));
@@ -40,6 +43,14 @@ public class PlayerStatus : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    public void AddKill()
+    {
+        KillCount++;
+        GameObject.FindGameObjectWithTag("KillText").GetComponent<Text>().text = KillCount.ToString();
+
     }
 
 
