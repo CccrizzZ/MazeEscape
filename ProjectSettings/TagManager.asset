@@ -12,12 +12,12 @@ TagManager:
   - Enemy
   - portal
   - supplybox
-  - firstaid
-  - bat
   - KeyText
   - TimerText
   - HealthText
   - KillText
+  - PickupText
+  - Pickups
   layers:
   - Default
   - TransparentFX

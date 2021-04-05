@@ -11,6 +11,7 @@ public class EnemyFollowState : EnemyStates
 
     float DeltaDistance;
 
+
     public EnemyFollowState(GameObject followTarget, EnemyScript e, StateMachine s) : base(e, s)
     {
         FollowTarget = followTarget;
@@ -45,12 +46,25 @@ public class EnemyFollowState : EnemyStates
     {
         base.Update();
 
+        if(FollowTarget.GetComponent<PlayerStatus>().Health <= 0)
+        {
+            StateMachine.GotoState(EnemyStateType.Idle);
+        }
+
+        // get distance between enemy and target
+        DeltaDistance = Vector3.Distance(E_Component.transform.position, FollowTarget.transform.position);
+
+        // goto idle if player out of range
+        if (DeltaDistance >= DetectionDistance)
+        {
+            StateMachine.GotoState(EnemyStateType.Idle);
+        }
+
+
         // play moving animation
         // E_Component.E_Animator.SetFloat(MovementHash, E_Component.E_NavMesh.velocity.normalized.z * 10);
         E_Component.E_Animator.SetFloat(MovementHash, 1.0f);
 
-        // get distance between enemy and target
-        DeltaDistance = Vector3.Distance(E_Component.transform.position, FollowTarget.transform.position);
 
         // Debug.Log(DeltaDistance);
         // if distance in stop distance range
@@ -59,10 +73,14 @@ public class EnemyFollowState : EnemyStates
             StateMachine.GotoState(EnemyStateType.Attack);
         }
 
-
-    
     }
 
 
+    // override public void Exit()
+    // {
+    //     base.Exit();
+    //     E_Component.E_Animator.SetFloat(MovementHash, 0.0f);
+
+    // }
 
 }

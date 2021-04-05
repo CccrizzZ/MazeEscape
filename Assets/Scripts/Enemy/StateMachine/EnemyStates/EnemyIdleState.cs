@@ -5,9 +5,14 @@ using UnityEngine;
 public class EnemyIdleState : EnemyStates
 {
 
-    public EnemyIdleState(EnemyScript e, StateMachine s) : base(e, s)
-    {
+    GameObject FollowTarget;
 
+    float DistanceToTarget;
+
+
+    public EnemyIdleState(GameObject followTarget ,EnemyScript e, StateMachine s) : base(e, s)
+    {
+        FollowTarget = followTarget;
     }
 
 
@@ -20,5 +25,27 @@ public class EnemyIdleState : EnemyStates
         E_Component.E_NavMesh.ResetPath();
         E_Component.E_Animator.SetFloat(MovementHash, 0.0f);
     }
+
+    public override void Update()
+    {
+        base.Update();
+        
+        E_Component.E_Animator.SetFloat(MovementHash, 0.0f);
+
+        // stop if player is dead
+        if (!(FollowTarget.GetComponent<PlayerStatus>().Health <= 0))
+        {
+            // if player in range, follow and attack
+            DistanceToTarget = Vector3.Distance(E_Component.transform.position, FollowTarget.transform.position);
+            if (DistanceToTarget <= DetectionDistance)
+            {
+                StateMachine.GotoState(EnemyStateType.Follow);
+            }
+
+        }
+
+
+    }
+
 
 }

@@ -46,6 +46,8 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     void OnFire(InputValue pressed)
     {
+        if(P_Status.Health <= 0) return; 
+
         // if holding melee weapon
         if(CurrentWeaponInfo.type == WeaponType.melee)
         {

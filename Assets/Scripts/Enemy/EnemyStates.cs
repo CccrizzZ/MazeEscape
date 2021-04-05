@@ -10,9 +10,15 @@ public class EnemyStates : State
     protected int AttackHash = Animator.StringToHash("IsAttacking");
 
     
-    protected float StopDistance = 2.2f;
+    // follow stop distance
+    protected float StopDistance = 2.3f;
+    
+    // melee attack range
+    protected float MeleeAttackRange = 2.3f;
 
-    protected float MeleeAttackRange = 2.2f;
+    // detection distance
+    protected float DetectionDistance = 15;
+
 
     protected EnemyScript E_Component;
 

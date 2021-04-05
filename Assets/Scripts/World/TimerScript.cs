@@ -14,8 +14,14 @@ public class TimerScript : MonoBehaviour
     bool activated;
 
 
+    PlayerStatus P_Status;
+
     void Start()
     {
+        // player status
+        P_Status = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatus>();
+
+        // init clock
         clock_seconds = time_limit;
         GameObject.FindGameObjectWithTag("TimerText").GetComponent<Text>().text = clock_seconds.ToString();
         activated = true;
@@ -24,7 +30,7 @@ public class TimerScript : MonoBehaviour
 
     void Update()
     {
-        if (Time.frameCount % 120 == 0 && activated)
+        if (Time.frameCount % 120 == 0 && activated && P_Status.Health > 0)
         {
             if (clock_seconds > 0)
             {
@@ -36,7 +42,7 @@ public class TimerScript : MonoBehaviour
             else
             {
                 // call player death function
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatus>().Death();
+                P_Status.Death();
 
 
             }

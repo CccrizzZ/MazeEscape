@@ -25,7 +25,7 @@ namespace WeaponScript
         void Start()
         {
             WeaponName = gameObject.name;
-            print(WeaponName);
+            // print(WeaponName);
         }
 
         void Update()

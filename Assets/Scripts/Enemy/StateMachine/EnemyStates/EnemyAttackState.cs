@@ -18,9 +18,6 @@ public class EnemyAttackState : EnemyStates
 
     public override void Start()
     {
-        // set weapon holder bool
-        E_Component.E_WeaponHolder.IsAttacking = true;
-
 
         // stop navmesh and reset path
         E_Component.E_NavMesh.isStopped = true;
@@ -30,7 +27,10 @@ public class EnemyAttackState : EnemyStates
         E_Component.E_Animator.SetFloat(MovementHash, 0.0f);
         E_Component.E_Animator.SetBool(AttackHash, true);
 
+        // set weapon holder bool
+        E_Component.E_WeaponHolder.IsAttacking = true;
     }
+
 
 
 
@@ -43,6 +43,14 @@ public class EnemyAttackState : EnemyStates
 
     public override void Update()
     {
+        // if player dead, goto idle state
+        if (FollowTarget.GetComponent<PlayerStatus>().Health <= 0)
+        {
+            StateMachine.GotoState(EnemyStateType.Idle);
+            return;
+        }
+
+
         // look at the follow target
         E_Component.transform.LookAt(FollowTarget.transform.position, Vector3.up);
         
@@ -53,6 +61,10 @@ public class EnemyAttackState : EnemyStates
         if (DeltaDistance > MeleeAttackRange)
         {
             StateMachine.GotoState(EnemyStateType.Follow);
+        }
+        else if(DeltaDistance < MeleeAttackRange)
+        {
+            StateMachine.GotoState(EnemyStateType.Attack);
         }
 
 
@@ -70,6 +82,7 @@ public class EnemyAttackState : EnemyStates
     public override void Exit()
     {
         base.Exit();
+        E_Component.E_WeaponHolder.IsAttacking = false;
         E_Component.E_Animator.SetBool(AttackHash, false);
 
     }

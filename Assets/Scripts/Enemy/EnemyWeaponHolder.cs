@@ -48,16 +48,27 @@ public class EnemyWeaponHolder : MonoBehaviour
         print("Damage to Player: " + -CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage);
     }
 
-
-
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
+
         if (other.gameObject.CompareTag("Player") && IsAttacking)
         {
+            IsAttacking = false;
             DealtDamageToPlayer(other.gameObject);
 
-        
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        // if (other.gameObject.CompareTag("Player"))
+        // {
+
+        //     IsAttacking = false;
+        // }
 
     }
+
+
+
 }

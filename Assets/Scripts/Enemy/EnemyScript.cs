@@ -61,7 +61,7 @@ public class EnemyScript : MonoBehaviour
 
 
         // register all states in state machine
-        EnemyIdleState E_IdleState = new EnemyIdleState(this, E_StateMachine);
+        EnemyIdleState E_IdleState = new EnemyIdleState(E_FollowTarget, this, E_StateMachine);
         E_StateMachine.AddState(EnemyStateType.Idle, E_IdleState);
 
         EnemyAttackState E_AttackState = new EnemyAttackState(E_FollowTarget, this, E_StateMachine);
@@ -75,7 +75,7 @@ public class EnemyScript : MonoBehaviour
 
 
         // init state machine
-        E_StateMachine.Init(EnemyStateType.Follow);
+        E_StateMachine.Init(EnemyStateType.Idle);
 
 
     }
@@ -85,6 +85,7 @@ public class EnemyScript : MonoBehaviour
 
     public void SetHealth(int input)
     {
+        // clamp
         if (Health + input >= 0  && Health + input <= 100)
         {
             // set health and set indicator color
@@ -95,6 +96,7 @@ public class EnemyScript : MonoBehaviour
             
         }
         
+        // drop dead and add kill to player
         if (Health <= 0)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatus>().AddKill();    
@@ -103,6 +105,8 @@ public class EnemyScript : MonoBehaviour
 
     }
 
+
+    // swap collider upon death
     public void SwapAliveAndDeadCapsule()
     {
         E_NavMesh.enabled = false;
@@ -113,7 +117,7 @@ public class EnemyScript : MonoBehaviour
     
     }
 
-
+    // drop current weapon
     void DropWeapon()
     {
         E_WeaponHolder.DropWeapon();

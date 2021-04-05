@@ -123,10 +123,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnRun(InputValue input)
     {
-        if (input.Get().ToString()=="1")
+        if (input.Get().ToString() == "1")
         {
             isRunning = true;
-            if(InputVector.y>0)
+            if(InputVector.y > 0)
             {
                 animController.SetFloat("YMovement", 0.5f);
             }
@@ -137,6 +137,11 @@ public class PlayerMovement : MonoBehaviour
             if(InputVector.y > 0)
             {
                 animController.SetFloat("YMovement", 0.25f);
+            }
+            else if(InputVector.y < 0)
+            {
+                animController.SetFloat("YMovement", -0.5f);
+
             }
             else
             {
@@ -149,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputValue input)
     {
-        if(!isJumping && isGrounded && Time.timeScale == 1)
+        if(!isJumping && isGrounded && Time.timeScale == 1 && GetComponent<PlayerStatus>().Health > 0)
         {
             // // reset velocity
             // rbRef.velocity = Vector3.zero;
@@ -158,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = input.isPressed;
 
             // add force to rigidbody
-            rbRef.AddForce((transform.up + MoveDirection ) * (JumpForce + CurrentSpeed) / 2 , ForceMode.Impulse);
+            rbRef.AddForce(4 * (transform.up + MoveDirection ) * (JumpForce + CurrentSpeed) / 2 , ForceMode.Impulse);
             
         }
     }

@@ -8,11 +8,12 @@ using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
 {
-    int Health;
+    public int Health;
     int Stamina;
     public int KeyCount;
     public int KillCount;
 
+    public PlayerWeaponHolder P_WeaponHolder;
 
     public CapsuleCollider InGameCollider;
     public CapsuleCollider DeathCollider;
@@ -65,15 +66,50 @@ public class PlayerStatus : MonoBehaviour
 
     public void setHealth(int input)
     {
-        // set health and update ui
-        Health += input;
+        // dont set health if already dead
+        if(Health <= 0) return;
+
+
+        if (Health + input > 0)
+        {
+            if (input < 0)
+            {
+                // set health
+                Health += input / 2;
+            }
+            else if (Health + input > 100)
+            {
+                Health = 100;
+            }
+            else
+            {
+                Health += input;
+
+            }
+            
+        }
+        else if (Health + input <= 0)
+        {
+            Health = 0;
+            Death();
+
+        }
+
+        // update ui
         GameObject.FindGameObjectWithTag("HealthText").GetComponent<Text>().text = Health.ToString();
+
 
     }
 
 
     public void Death()
     {
+        // clear health
+        if(Health != 0)
+        {
+            Health = 0;
+        }
+
 
         // disable player movement and look
         GetComponent<PlayerMovement>().canMove = false;
@@ -96,9 +132,14 @@ public class PlayerStatus : MonoBehaviour
 
     IEnumerator GotoDeathScreen()
     {
+        // wait for animation to finish
         yield return new WaitForSeconds(4);
+
+        // show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+        // load scene
         SceneManager.LoadScene("GameOverScene");
 
     }

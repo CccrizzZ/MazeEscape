@@ -137,8 +137,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.65, y: 0.52, z: 0.38}
-  m_Center: {x: -0.4, y: 0, z: 0.2}
+  m_Size: {x: 0.39, y: 0.15, z: 0.13}
+  m_Center: {x: -0.4, y: 0, z: 0.09}
 --- !u!114 &2916320306126706056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b56e80a23cfec42b298ac3d063db1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrState: {fileID: 0}
 --- !u!114 &10133845419466123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0237dc8c076f5034e8f6361a77d72d36, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0237dc8c076f5034e8f6361a77d72d36, type: 3}
       propertyPath: m_LocalPosition.y
@@ -384,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0237dc8c076f5034e8f6361a77d72d36, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.048
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0237dc8c076f5034e8f6361a77d72d36, type: 3}
       propertyPath: m_LocalRotation.w
