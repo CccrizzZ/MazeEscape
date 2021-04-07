@@ -1,85 +1,112 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Pickup;
 
 public class PlayerPickupScript : MonoBehaviour
 {
-
+    // player components
     PlayerStatus P_Status;
     PlayerWeaponHolder P_WeaponHolder;
 
-    List<GameObject> NearbyPickups;
-
+    // pickup detection
+    float DetectionRange;
     GameObject TargetPickup;
-    float prevDistance;
+    float PrevDistance;
 
 
-    // List<GameObject> AllPickups;
+    // UIs
+    Text PickupText;
+    Text PickupNameText;
 
     void Start()
     {
-        NearbyPickups = new List<GameObject>();
-
+        // player component
         P_Status = GetComponent<PlayerStatus>();
         P_WeaponHolder = P_Status.P_WeaponHolder;
+
+        // ui
+        PickupText = GameObject.FindGameObjectWithTag("PickupText").GetComponent<Text>();
+        PickupNameText = GameObject.FindGameObjectWithTag("PickupText").transform.GetChild(0).GetComponent<Text>();
+
+        PickupText.gameObject.SetActive(false);
+
+        DetectionRange = 3.0f;
     }
 
     void Update()
     {
 
-        GameObject[] temp = GameObject.FindGameObjectsWithTag("Pickups");
-        if (temp.Length == 0) return;
-
-        // if (!(NearbyPickups.Count > 0))
-        // {
-        //     foreach(var item in NearbyPickups)
-        //     {
-        //         if (!item.GetComponent<PickupBase>().canpickup)
-        //         {
-        //             NearbyPickups.Remove(item);
-        //         }
-        
-        //         print(item.name);
-        //     }
-        // }
-
-        
-        // detect near by item and put them in list
-        foreach (var item in temp)
+        if (P_Status.Health <= 0)
         {
-            // if (item.GetComponent<PickupBase>().canpickup && !NearbyPickups.Contains(item))
-            // {
-            //     NearbyPickups.Add(item);
-            // }
-            float distance = Vector3.Distance(item.transform.position, transform.position);
-            if (distance < 3)
-            {
-                if (TargetPickup == null)
-                {
-                    TargetPickup = item;
-                    prevDistance = distance;
-                }
-                else if(distance < prevDistance)
-                {
-                    TargetPickup = item;
-                    prevDistance = distance;
-                }
-                
-            }
+            TargetPickup = null;
+            HideUI();
+            return;
+        }
 
+        // detect all pickups
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("Pickups");
+        if (temp.Length <= 0) 
+        {
+            TargetPickup = null;
+            HideUI();
+            return;
+        }
+
+
+        // print(temp.Length);
+
+        // get nearby pickup
+        TargetPickup = GetNearestPickup(temp);
+    
+        // toggle ui
+        if (!TargetPickup)
+        {
+            HideUI();
+        }
+        else
+        {
+            PickupText.gameObject.SetActive(true);
+            PickupNameText.text = TargetPickup.name;
         }
 
     }
 
 
+    void HideUI()
+    {   
+
+        PickupNameText.text = "";
+        PickupText.gameObject.SetActive(false);
+    }
+
+
+
+    // get nearest pickup item
+    GameObject GetNearestPickup(GameObject[] allPickups)
+    {
+        GameObject goMin = null;
+        float minDist = Mathf.Infinity;
+        foreach (var pickup in allPickups)
+        {
+            float dist = Vector3.Distance(pickup.transform.position, transform.position);
+            if (dist < DetectionRange)
+            {
+                goMin = pickup;
+                minDist = dist;
+            }
+        }
+        return goMin;
+    }
+
+
     public void OnPickup(InputValue input)
     {
-        // print("pickup");
+
 
         // get the nearest pickup
-        // var temp = NearbyPickups[NearbyPickups.Count - 1];
         if (!TargetPickup) return;
 
         if (TargetPickup.GetComponent<PickupBase>().Type == PickupType.MEDS)
@@ -87,9 +114,9 @@ public class PlayerPickupScript : MonoBehaviour
             TargetPickup.GetComponent<MedScript>().Pickup();
             
         }
-        else
+        else if (TargetPickup.GetComponent<PickupBase>().Type == PickupType.TOOLS)
         {
-            
+            P_WeaponHolder.PickupWeapon(TargetPickup);
         }
 
 

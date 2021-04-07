@@ -69,7 +69,7 @@ public class StateMachine : MonoBehaviour
     // else start that state and its interval update
     public void GotoState(EnemyStateType target)
     {
-        Debug.Log(target);
+        // Debug.Log(target);
         
 
         if (running)

@@ -6,10 +6,11 @@ using WeaponScript;
 public class EnemyWeaponHolder : MonoBehaviour
 {
 
+    // list of random weapons
     public GameObject[] WeaponList;
-
+    // current weapon on hand
     GameObject CurrentWeapon;
-
+    // is attacking bool
     public bool IsAttacking;
 
 
@@ -17,26 +18,23 @@ public class EnemyWeaponHolder : MonoBehaviour
     {
         // enemy's weapon will be random
         CurrentWeapon = Instantiate(WeaponList[Random.Range(0, WeaponList.Length)], transform);    
+        CurrentWeapon.GetComponent<ToolScript>().setPickedup(true);
         print(CurrentWeapon.gameObject.name);
     }
 
-    
+    // drop current weapon
     public void DropWeapon()
     {
-        var temp = CurrentWeapon.transform.GetChild(0);
-        if (temp.GetComponent<CapsuleCollider>())
-        {
-            temp.GetComponent<CapsuleCollider>().enabled = true;
-        }
-        else if(temp.GetComponent<BoxCollider>())
-        {
-            temp.GetComponent<BoxCollider>().enabled = true;
-        }
 
-
-        temp.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
+        // set rigidbody
+        CurrentWeapon.GetComponent<ToolScript>().SetRigidBodyAndCollider(true);
+        // detach
         CurrentWeapon.transform.parent = null;
+        // set tag
+        CurrentWeapon.GetComponent<ToolScript>().setPickedup(false);
+        // set null
+        CurrentWeapon = null;
+
     }
     
 
@@ -48,6 +46,7 @@ public class EnemyWeaponHolder : MonoBehaviour
         print("Damage to Player: " + -CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage);
     }
 
+    // dealt damage to player
     void OnTriggerEnter(Collider other)
     {
 
@@ -57,16 +56,6 @@ public class EnemyWeaponHolder : MonoBehaviour
             DealtDamageToPlayer(other.gameObject);
 
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        // if (other.gameObject.CompareTag("Player"))
-        // {
-
-        //     IsAttacking = false;
-        // }
-
     }
 
 

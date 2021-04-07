@@ -19,6 +19,8 @@ namespace Pickup
 
         public PickupType Type;
         protected GameObject PlayerRef;
+        protected PlayerStatus PlayerStatusRef;
+
         
         float Distance;
 
@@ -37,6 +39,7 @@ namespace Pickup
             if (PlayerRef == null)
             {
                 PlayerRef = GameObject.FindGameObjectWithTag("Player");
+                PlayerStatusRef = PlayerRef.GetComponent<PlayerStatus>();
             }
 
             // get to player distance
@@ -51,7 +54,6 @@ namespace Pickup
 
             // if close set canpickup to true
             canpickup = true;
-            // print(Distance);
 
         }
 

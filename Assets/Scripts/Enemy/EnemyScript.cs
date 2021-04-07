@@ -51,6 +51,7 @@ public class EnemyScript : MonoBehaviour
 
     void Update()
     {
+
     }
 
 
@@ -86,14 +87,18 @@ public class EnemyScript : MonoBehaviour
     public void SetHealth(int input)
     {
         // clamp
-        if (Health + input >= 0  && Health + input <= 100)
+        if (Health + input > 0)
         {
             // set health and set indicator color
             Health += input;
             E_HealthIndicator.SetHealthIndicatorColor(Health);
 
-            print(Health);
+            // print(Health);
             
+        }
+        else if (Health + input <= 0)
+        {
+            Health = 0;
         }
         
         // drop dead and add kill to player
@@ -109,11 +114,16 @@ public class EnemyScript : MonoBehaviour
     // swap collider upon death
     public void SwapAliveAndDeadCapsule()
     {
+        // swap collision capsule
         E_NavMesh.enabled = false;
         AliveCapsule.enabled = false;
         DeadCapsule.enabled = true;
 
+        // drop weapon
         DropWeapon();
+
+        //  disable health indicator
+        E_HealthIndicator.gameObject.SetActive(false);
     
     }
 

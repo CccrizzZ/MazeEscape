@@ -8,29 +8,38 @@ using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour
 {
+    // vars
+    public int Stamina;
     public int Health;
-    int Stamina;
     public int KeyCount;
     public int KillCount;
 
-    public PlayerWeaponHolder P_WeaponHolder;
+    public bool godmode;
 
+    // references
+    public PlayerMovement P_Movement;
+    public PlayerWeaponHolder P_WeaponHolder;
     public CapsuleCollider InGameCollider;
     public CapsuleCollider DeathCollider;
     
+
+
+
 
 
     void Start()
     {
         KillCount = 0;
         KeyCount = 0;
-        Health = 100;
+        Health = 50;
         Stamina = 100;
 
         // init ui
         GameObject.FindGameObjectWithTag("KeyText").GetComponent<Text>().text = KeyCount.ToString();
         GameObject.FindGameObjectWithTag("HealthText").GetComponent<Text>().text = Health.ToString();
         GameObject.FindGameObjectWithTag("KillText").GetComponent<Text>().text = KillCount.ToString();
+
+
 
         // spawn player at random position
         // transform.position = new Vector3(Random.Range(-35, 56), -14f, Random.Range(30, 123));
@@ -43,9 +52,22 @@ public class PlayerStatus : MonoBehaviour
 
     void Update()
     {
-        
+
+    }
+    
+    public void StartAddy()
+    {
+        StartCoroutine(StopAddy(P_Movement.WalkSpeed, P_WeaponHolder.power));
+        P_Movement.WalkSpeed = P_Movement.RunSpeed;
+        P_WeaponHolder.power = 2;
     }
 
+    IEnumerator StopAddy(float OriginalWalkSpeed, int OriginalPower)
+    {
+        yield return new WaitForSeconds(20);
+        P_Movement.WalkSpeed = OriginalWalkSpeed;
+        P_WeaponHolder.power = OriginalPower;
+    }
 
     public void AddKill()
     {
@@ -66,6 +88,8 @@ public class PlayerStatus : MonoBehaviour
 
     public void setHealth(int input)
     {
+        if (godmode) return;
+        
         // dont set health if already dead
         if(Health <= 0) return;
 
@@ -104,12 +128,15 @@ public class PlayerStatus : MonoBehaviour
 
     public void Death()
     {
+        
         // clear health
         if(Health != 0)
         {
             Health = 0;
         }
 
+        // drop weapon
+        P_WeaponHolder.DropWeapon();
 
         // disable player movement and look
         GetComponent<PlayerMovement>().canMove = false;

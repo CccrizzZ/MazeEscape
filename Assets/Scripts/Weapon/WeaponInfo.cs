@@ -24,6 +24,15 @@ namespace WeaponScript
 
         void Start()
         {
+            if (transform.parent)
+            {
+                if(transform.parent.name != "WeaponHolder")
+                {
+                    transform.localScale = new Vector3(1,1,1);
+                }
+                
+            }
+
             WeaponName = gameObject.name;
             // print(WeaponName);
         }

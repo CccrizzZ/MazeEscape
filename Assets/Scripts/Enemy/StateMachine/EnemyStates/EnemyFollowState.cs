@@ -46,6 +46,12 @@ public class EnemyFollowState : EnemyStates
     {
         base.Update();
 
+        // if no health goto death state
+        if (E_Component.Health <= 0)
+        {
+            StateMachine.GotoState(EnemyStateType.Dead);
+        }
+
         if(FollowTarget.GetComponent<PlayerStatus>().Health <= 0)
         {
             StateMachine.GotoState(EnemyStateType.Idle);
@@ -64,6 +70,7 @@ public class EnemyFollowState : EnemyStates
         // play moving animation
         // E_Component.E_Animator.SetFloat(MovementHash, E_Component.E_NavMesh.velocity.normalized.z * 10);
         E_Component.E_Animator.SetFloat(MovementHash, 1.0f);
+
 
 
         // Debug.Log(DeltaDistance);

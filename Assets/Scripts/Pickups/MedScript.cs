@@ -13,7 +13,7 @@ public class MedScript : PickupBase
 
     private void Start()
     {
-        print(name);
+        // print(name);
 
         // set pickup type
         Type = PickupType.MEDS;
@@ -24,16 +24,31 @@ public class MedScript : PickupBase
     {
         base.Pickup();
 
+        
+
         switch (name)
         {
-            case"FirstAid":
-                // add health
-                print(PlayerRef.GetComponent<PlayerStatus>().Health);
-                if (PlayerRef.GetComponent<PlayerStatus>().Health < 100)
+            case "FirstAid":
+
+                // if player health full, ignore
+                if (PlayerStatusRef.Health < 100)
                 {
-                    PlayerRef.GetComponent<PlayerStatus>().setHealth(HealthPoint);
+                    PlayerStatusRef.setHealth(HealthPoint);
                     Destroy(gameObject);   
                 }
+
+                break;
+            case "Pill":
+                // activate addied mode
+                PlayerStatusRef.StartAddy();
+
+                Destroy(gameObject);   
+                // if player health full, ignore
+                if (PlayerStatusRef.Health < 100)
+                {
+                    PlayerStatusRef.setHealth(HealthPoint);
+                }
+
                 break;
             default:
                 break;
@@ -45,3 +60,5 @@ public class MedScript : PickupBase
     }
 
 }
+
+

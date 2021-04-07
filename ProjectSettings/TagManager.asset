@@ -18,6 +18,10 @@ TagManager:
   - KillText
   - PickupText
   - Pickups
+  - PickupItemName
+  - MaxKeyText
+  - CurrWeaponText
+  - DamageText
   layers:
   - Default
   - TransparentFX

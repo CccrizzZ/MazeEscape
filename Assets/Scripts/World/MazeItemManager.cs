@@ -1,27 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class MazeItemManager : MonoBehaviour
 {
-
+    // objects to generate
     public GameObject SupplyBox;
     public GameObject Portal;
     public GameObject Keys;
+    public GameObject EnemyFab;
+
     
+    // maximum number of objects
     int Max_Supply = 10;
     int Max_Key = 3;
     int Max_Portal = 1;
 
 
+    // portal
     GameObject p;
 
+
+    // list of key and supply
     List<GameObject> Keylist;
     List<GameObject> SupplyList;
 
+
+
     void Start()
     {
+        
+        GameObject.FindGameObjectWithTag("MaxKeyText").GetComponent<Text>().text = Max_Key.ToString();
 
+        
+        var temp = Instantiate(EnemyFab, transform);
+        SetRandomPosition(temp, 50);
+        
         // spawn portal
         p = Instantiate(Portal, transform);
         SetRandomPosition(p, 50);
@@ -51,20 +67,6 @@ public class MazeItemManager : MonoBehaviour
     {
         if (Time.frameCount % 240 == 0)
         {
-
-
-            // foreach (var item in SupplyList)
-            // {
-            //     if (item == null)
-            //     {
-            //         Keylist.Remove(item);                    
-            //     }
-            //     else
-            //     {
-            //         SetRandomPosition(item, 50);
-            //     }
-            // }
-
 
             // if portal destroyed upon spawn
             var PortalInGame = GameObject.FindGameObjectsWithTag("portal").Length;
