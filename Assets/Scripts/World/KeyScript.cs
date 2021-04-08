@@ -50,6 +50,8 @@ public class KeyScript : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerStatus>().AddKey();
+            GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>().PlayKeySound();
+
             Destroy(gameObject);    
         }
 

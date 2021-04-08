@@ -6,6 +6,8 @@ using WeaponScript;
 public class EnemyWeaponHolder : MonoBehaviour
 {
 
+    public AudioSource AS_hit;
+
     // list of random weapons
     public GameObject[] WeaponList;
     // current weapon on hand
@@ -19,7 +21,7 @@ public class EnemyWeaponHolder : MonoBehaviour
         // enemy's weapon will be random
         CurrentWeapon = Instantiate(WeaponList[Random.Range(0, WeaponList.Length)], transform);    
         CurrentWeapon.GetComponent<ToolScript>().setPickedup(true);
-        print(CurrentWeapon.gameObject.name);
+        // print(CurrentWeapon.gameObject.name);
     }
 
     // drop current weapon
@@ -44,6 +46,7 @@ public class EnemyWeaponHolder : MonoBehaviour
     {
         player.GetComponent<PlayerStatus>().setHealth(-CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage);
         print("Damage to Player: " + -CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage);
+        AS_hit.Play();
     }
 
     // dealt damage to player

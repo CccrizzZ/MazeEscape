@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    // parameters
     public float WalkSpeed;
     public float RunSpeed;
     public float JumpForce;    
@@ -18,12 +18,12 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove;
     public bool isPaused;
 
+    // references
     Rigidbody rbRef;
     Animator animController;
     PlayerCamera pcamRef;
 
-    
-    
+    // movement var
     public Vector2 InputVector;
     Vector3 MoveDirection;
     float CurrentSpeed;
@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (other.gameObject.CompareTag("Ground"))
         {
-            print("Grounded");
+            // print("Grounded");
             isGrounded = true;
             isJumping = false;
         }

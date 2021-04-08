@@ -43,11 +43,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSound: {fileID: 0}
   RandomCandidateArray:
+  - {fileID: 6568411229490831594, guid: 5c1256bc17526f2488a614b913002ef3, type: 3}
   - {fileID: 6035334278351890463, guid: dfced701235e7104d8647c567966ca9a, type: 3}
-  - {fileID: 8777128058622096460, guid: 6ef53e01ea433e641ae4b7e99b40da14, type: 3}
   - {fileID: 396173459236532918, guid: 55ce9d8d7161efc489bf37655644b8c8, type: 3}
   - {fileID: 5335602121887687162, guid: 318e8f25f6c30f34f9102db22234f78c, type: 3}
   - {fileID: 8777128058622096460, guid: 6ef53e01ea433e641ae4b7e99b40da14, type: 3}
+  - {fileID: 6493154997540439058, guid: 9fc3628b001820a47bc7b04299b000c5, type: 3}
 --- !u!1001 &2497472988600499758
 PrefabInstance:
   m_ObjectHideFlags: 0

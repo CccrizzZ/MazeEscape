@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -24,14 +25,13 @@ public class PlayerStatus : MonoBehaviour
     
 
 
-
-
+    PostProcessVolume PP_Volume;
 
     void Start()
     {
         KillCount = 0;
         KeyCount = 0;
-        Health = 50;
+        Health = 100;
         Stamina = 100;
 
         // init ui
@@ -40,6 +40,7 @@ public class PlayerStatus : MonoBehaviour
         GameObject.FindGameObjectWithTag("KillText").GetComponent<Text>().text = KillCount.ToString();
 
 
+        PP_Volume = Camera.main.GetComponent<PostProcessVolume>();
 
         // spawn player at random position
         // transform.position = new Vector3(Random.Range(-35, 56), -14f, Random.Range(30, 123));
@@ -57,14 +58,29 @@ public class PlayerStatus : MonoBehaviour
     
     public void StartAddy()
     {
+        // set post processing
+        if (PP_Volume.profile.TryGetSettings<LensDistortion>(out var ldis))
+        {
+            ldis.active = true;    
+        }
+
         StartCoroutine(StopAddy(P_Movement.WalkSpeed, P_WeaponHolder.power));
+        godmode = true;
         P_Movement.WalkSpeed = P_Movement.RunSpeed;
-        P_WeaponHolder.power = 2;
+        P_WeaponHolder.power = 4;
     }
 
     IEnumerator StopAddy(float OriginalWalkSpeed, int OriginalPower)
-    {
+    {        
         yield return new WaitForSeconds(20);
+     
+        // set post processing
+        if (PP_Volume.profile.TryGetSettings<LensDistortion>(out var ldis))
+        {
+            ldis.active = false;    
+        }
+
+        godmode = false;
         P_Movement.WalkSpeed = OriginalWalkSpeed;
         P_WeaponHolder.power = OriginalPower;
     }
@@ -98,7 +114,6 @@ public class PlayerStatus : MonoBehaviour
         {
             if (input < 0)
             {
-                // set health
                 Health += input / 2;
             }
             else if (Health + input > 100)
@@ -128,7 +143,18 @@ public class PlayerStatus : MonoBehaviour
 
     public void Death()
     {
-        
+        // turn on death post processing effect
+        if (PP_Volume.profile.TryGetSettings<ColorGrading>(out var bnw))
+        {
+            bnw.active = true;    
+        }
+
+        // turn off pill post processing
+        if (PP_Volume.profile.TryGetSettings<LensDistortion>(out var ldis))
+        {
+            ldis.active = false;    
+        }
+
         // clear health
         if(Health != 0)
         {

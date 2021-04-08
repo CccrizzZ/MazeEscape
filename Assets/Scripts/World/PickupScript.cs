@@ -30,7 +30,7 @@ public class PickupScript : MonoBehaviour
             var randint = Random.Range(0, RandomCandidateArray.Length);
             GameObject supply = Instantiate(RandomCandidateArray[randint]);
             
-            print(supply.name);
+            // print(supply.name);
 
 
             // set position
@@ -48,11 +48,14 @@ public class PickupScript : MonoBehaviour
             }
 
 
-            print(supply.transform.position);
+            // print(supply.transform.position);
 
             // get rid of the (clone) in name
             supply.name = supply.name.Replace("(Clone)", "");
 
+
+            GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>().PlayBoxSound();
+            
             // destroy this box
             Destroy(this.transform.parent.gameObject);
 

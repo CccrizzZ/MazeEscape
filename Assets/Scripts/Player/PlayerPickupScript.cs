@@ -7,6 +7,8 @@ using Pickup;
 
 public class PlayerPickupScript : MonoBehaviour
 {
+    public AudioSource AS_pick;
+
     // player components
     PlayerStatus P_Status;
     PlayerWeaponHolder P_WeaponHolder;
@@ -27,18 +29,19 @@ public class PlayerPickupScript : MonoBehaviour
         P_Status = GetComponent<PlayerStatus>();
         P_WeaponHolder = P_Status.P_WeaponHolder;
 
-        // ui
+        // init ui
         PickupText = GameObject.FindGameObjectWithTag("PickupText").GetComponent<Text>();
         PickupNameText = GameObject.FindGameObjectWithTag("PickupText").transform.GetChild(0).GetComponent<Text>();
-
         PickupText.gameObject.SetActive(false);
 
+
+        // detection range for pickups
         DetectionRange = 3.0f;
     }
 
     void Update()
     {
-
+        // if dead disable pickup system
         if (P_Status.Health <= 0)
         {
             TargetPickup = null;
@@ -69,12 +72,13 @@ public class PlayerPickupScript : MonoBehaviour
         else
         {
             PickupText.gameObject.SetActive(true);
-            PickupNameText.text = TargetPickup.name;
+            PickupNameText.text = TargetPickup.name.Replace("weapon_", "");
         }
 
     }
 
 
+    // hide ui
     void HideUI()
     {   
 
@@ -102,24 +106,24 @@ public class PlayerPickupScript : MonoBehaviour
     }
 
 
+    
     public void OnPickup(InputValue input)
     {
-
 
         // get the nearest pickup
         if (!TargetPickup) return;
 
+
+        // determine if pickup is med or weapon
         if (TargetPickup.GetComponent<PickupBase>().Type == PickupType.MEDS)
         {
             TargetPickup.GetComponent<MedScript>().Pickup();
-            
         }
         else if (TargetPickup.GetComponent<PickupBase>().Type == PickupType.TOOLS)
         {
             P_WeaponHolder.PickupWeapon(TargetPickup);
         }
-
-
+        AS_pick.Play();
     }
 
 

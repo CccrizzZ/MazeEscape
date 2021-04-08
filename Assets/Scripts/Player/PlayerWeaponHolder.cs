@@ -6,6 +6,9 @@ using WeaponScript;
 
 public class PlayerWeaponHolder : MonoBehaviour
 {
+    // attacking sound effects
+    public AudioSource AS_slash;
+    public AudioSource AS_hit;
 
     // reference
     public PlayerMovement P_move;
@@ -22,8 +25,6 @@ public class PlayerWeaponHolder : MonoBehaviour
     WeaponInfo CurrentWeaponInfo;
     ToolScript CurrentWeaponTScript;
 
-
-
     
     // player start weapon
     public GameObject InitWeapon;
@@ -35,6 +36,10 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     // damage = weapon damage * power
     public int power;
+
+    bool canplay = false;
+    bool alreadyplayed = false;
+
 
     void Start()
     {
@@ -65,8 +70,15 @@ public class PlayerWeaponHolder : MonoBehaviour
 
     void Update()
     {
-
-    }
+        if (P_AnimController.GetCurrentAnimatorStateInfo(1).IsName("Melee"))
+        {
+            canplay = false;
+        }
+        else
+        {
+            canplay = true;
+        }
+    } 
 
 
 
@@ -81,8 +93,15 @@ public class PlayerWeaponHolder : MonoBehaviour
         {
             if (pressed.Get().ToString() == "1")
             {
-                
+
                 P_AnimController.SetBool("IsMelee", true);
+
+                if (P_AnimController.GetCurrentAnimatorStateInfo(1).IsName("Melee") && !alreadyplayed)
+                {
+                    AS_slash.Play();
+                    alreadyplayed = true;
+                }
+
                 StartCoroutine(StopAnimationAfterZeroPointOneSecond());
             }
 
@@ -99,29 +118,35 @@ public class PlayerWeaponHolder : MonoBehaviour
     // stop attacking
     IEnumerator StopAnimationAfterZeroPointOneSecond()
     {
-        IsAttacking = true;
-        yield return new WaitForSeconds(0.05f);
+        IsAttacking = true;    
+        yield return new WaitForSeconds(0.01f);
         P_AnimController.SetBool("IsMelee", false);
         IsAttacking = false;
+        alreadyplayed = false;
+
+
     }
 
 
     void OnTriggerEnter(Collider other)
     {
-        // play sound effect
+
 
 
         if (!CurrentWeaponInfo) return;
         if (CurrentWeaponInfo.type == WeaponType.melee)
         {
             if (other.gameObject.tag != "Enemy") return;
-            if (!IsAttacking) return;
+            if (!P_AnimController.GetCurrentAnimatorStateInfo(1).IsName("Melee")) return;
 
             if (other.gameObject.GetComponent<EnemyScript>().Health > 0)
             {
                 // dealth damage to enemy
                 other.gameObject.GetComponent<EnemyScript>().SetHealth(-CurrentWeaponInfo.Damage * power);
-                
+                print(-CurrentWeaponInfo.Damage * power);
+
+                // play sound effect
+                AS_hit.Play();
             }
             
             // add force to enemy
@@ -214,5 +239,8 @@ public class PlayerWeaponHolder : MonoBehaviour
         
 
     }
+
+
+
 
 }

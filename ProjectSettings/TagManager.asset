@@ -22,6 +22,7 @@ TagManager:
   - MaxKeyText
   - CurrWeaponText
   - DamageText
+  - SoundManager
   layers:
   - Default
   - TransparentFX
