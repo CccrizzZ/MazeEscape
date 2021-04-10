@@ -15,6 +15,7 @@ public class EnemyDeadState : EnemyStates
     public override void Start()
     {
         base.Start();
+        if(!E_Component.E_NavMesh)return;
 
         // stop navigation
         E_Component.E_NavMesh.isStopped = true;
@@ -34,8 +35,8 @@ public class EnemyDeadState : EnemyStates
     public override void Exit()
     {
         base.Exit();
-        E_Component.E_NavMesh.isStopped = false;
-        E_Component.E_Animator.SetBool(DeathHash, false);
+        // E_Component.E_NavMesh.isStopped = false;
+        // E_Component.E_Animator.SetBool(DeathHash, false);
 
     }
 

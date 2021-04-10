@@ -23,6 +23,12 @@ TagManager:
   - CurrWeaponText
   - DamageText
   - SoundManager
+  - PauseUI
+  - ScoreKeeper
+  - BGMManager
+  - Timer
+  - TimeText
+  - ScoreText
   layers:
   - Default
   - TransparentFX

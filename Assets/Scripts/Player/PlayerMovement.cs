@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isJumping;
     public bool isGrounded;
     public bool canMove;
-    public bool isPaused;
 
     // references
     Rigidbody rbRef;
@@ -96,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnMove(InputValue value)
     {
-        if (Time.timeScale == 1)
+        if (Time.timeScale == 1 && canMove)
         {
             
             // get input vector from input value
@@ -123,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnRun(InputValue input)
     {
-        if (input.Get().ToString() == "1")
+        if (input.Get().ToString() == "1" && canMove)
         {
             isRunning = true;
             if(InputVector.y > 0)
@@ -154,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputValue input)
     {
-        if(!isJumping && isGrounded && Time.timeScale == 1 && GetComponent<PlayerStatus>().Health > 0)
+        if(!isJumping && isGrounded && Time.timeScale == 1 && GetComponent<PlayerStatus>().Health > 0 && canMove)
         {
             // // reset velocity
             // rbRef.velocity = Vector3.zero;
@@ -177,5 +176,15 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = true;
             isJumping = false;
         }
+    }
+
+    void DisableMovement()
+    {
+        canMove = false;
+    }
+
+    void EnableMovement()
+    {
+        canMove = true;
     }
 }

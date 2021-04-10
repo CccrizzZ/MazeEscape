@@ -19,11 +19,14 @@ public class EnemyScript : MonoBehaviour
     GameObject E_FollowTarget;
     
 
+    // death sound effect
+    public AudioSource AS_Dead;
+
     // collider dead and alive
     public CapsuleCollider AliveCapsule;
     public CapsuleCollider DeadCapsule;
 
-
+    public ParticleSystem BloodParticle;
 
     private void Awake()
     {
@@ -43,7 +46,8 @@ public class EnemyScript : MonoBehaviour
     {
         // set follow target to player
         E_FollowTarget = GameObject.FindGameObjectWithTag("Player");
-        
+        // CameraFollowProject
+        print(E_FollowTarget.name);
         // init state machine
         Init(E_FollowTarget);
 
@@ -86,6 +90,9 @@ public class EnemyScript : MonoBehaviour
 
     public void SetHealth(int input)
     {
+
+        BloodParticle.Play();
+
         // clamp
         if (Health + input > 0)
         {
@@ -101,9 +108,12 @@ public class EnemyScript : MonoBehaviour
             Health = 0;
         }
         
-        // drop dead and add kill to player
         if (Health <= 0)
         {
+            // play sfx
+            AS_Dead.Play();
+
+            // drop dead and add kill to player
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStatus>().AddKill();    
         }
 

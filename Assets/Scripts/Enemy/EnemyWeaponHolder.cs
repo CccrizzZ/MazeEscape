@@ -27,7 +27,8 @@ public class EnemyWeaponHolder : MonoBehaviour
     // drop current weapon
     public void DropWeapon()
     {
-
+        if(!CurrentWeapon)return;
+        
         // set rigidbody
         CurrentWeapon.GetComponent<ToolScript>().SetRigidBodyAndCollider(true);
         // detach
@@ -45,7 +46,7 @@ public class EnemyWeaponHolder : MonoBehaviour
     void DealtDamageToPlayer(GameObject player)
     {
         player.GetComponent<PlayerStatus>().setHealth(-CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage);
-        print("Damage to Player: " + -CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage);
+        print("Damage to Player: " + -CurrentWeapon.gameObject.GetComponent<WeaponInfo>().Damage / 2);
         AS_hit.Play();
     }
 

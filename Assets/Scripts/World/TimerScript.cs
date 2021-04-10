@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TimerScript : MonoBehaviour
 {
 
-    int clock_seconds;
+    public int clock_seconds;
 
     int time_limit = 120;
 
@@ -30,7 +30,7 @@ public class TimerScript : MonoBehaviour
 
     void Update()
     {
-        if (Time.frameCount % 120 == 0 && activated && P_Status.Health > 0)
+        if (Time.frameCount % 120 == 0 && activated && P_Status.Health > 0 && Time.timeScale == 1)
         {
             if (clock_seconds > 0)
             {

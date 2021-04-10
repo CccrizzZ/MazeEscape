@@ -9,10 +9,12 @@ public class ButtonScript : MonoBehaviour
     public GameObject CreditPanel;
 
     public GameObject TutorialPanel;
-
+    public GameObject PausePanel;
 
     // sound effect
     public AudioSource ButtonSound;
+
+
 
 
     public void OnNewGameButtonPressed()
@@ -49,7 +51,11 @@ public class ButtonScript : MonoBehaviour
         else if(TutorialPanel)
         {
             Destroy(TutorialPanel);
-
+        }
+        else if (PausePanel)
+        {
+            // Destroy(PausePanel);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PauseScript>().Unpause();
         }
 
     }
@@ -74,4 +80,7 @@ public class ButtonScript : MonoBehaviour
     {
         ButtonSound.Play();
     }
+
+
+
 }

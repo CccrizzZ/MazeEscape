@@ -18,7 +18,8 @@ public class EnemyAttackState : EnemyStates
 
     public override void Start()
     {
-
+        if(!E_Component.E_NavMesh)return;
+        
         // stop navmesh and reset path
         E_Component.E_NavMesh.isStopped = true;
         E_Component.E_NavMesh.ResetPath();

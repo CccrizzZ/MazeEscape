@@ -123,6 +123,7 @@ public class PlayerPickupScript : MonoBehaviour
         {
             P_WeaponHolder.PickupWeapon(TargetPickup);
         }
+        
         AS_pick.Play();
     }
 

@@ -22,7 +22,11 @@ public class PlayerStatus : MonoBehaviour
     public PlayerWeaponHolder P_WeaponHolder;
     public CapsuleCollider InGameCollider;
     public CapsuleCollider DeathCollider;
-    
+    public ParticleSystem BloodParticle;
+
+
+    // sfx
+    public AudioSource Dead;
 
 
     PostProcessVolume PP_Volume;
@@ -104,6 +108,12 @@ public class PlayerStatus : MonoBehaviour
 
     public void setHealth(int input)
     {
+        // play particle effect
+        if (input < 0)
+        {
+            BloodParticle.Play();
+        }
+
         if (godmode) return;
         
         // dont set health if already dead
@@ -143,6 +153,10 @@ public class PlayerStatus : MonoBehaviour
 
     public void Death()
     {
+        // play sfx
+        Dead.Play();
+
+
         // turn on death post processing effect
         if (PP_Volume.profile.TryGetSettings<ColorGrading>(out var bnw))
         {
@@ -209,4 +223,7 @@ public class PlayerStatus : MonoBehaviour
         SceneManager.LoadScene("EscapedScene");
 
     }
+
+
+
 }

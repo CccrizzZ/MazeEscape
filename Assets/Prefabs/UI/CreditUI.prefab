@@ -228,6 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CreditPanel: {fileID: 572929412060245110}
   TutorialPanel: {fileID: 0}
+  PausePanel: {fileID: 0}
   ButtonSound: {fileID: 5114155351670491976}
 --- !u!82 &5114155351670491976
 AudioSource:
@@ -481,7 +482,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Created by:
 
-    Chirs
+    Beining Chirs Liu
 
     Github: cccrizzz
 
